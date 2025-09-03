@@ -52,10 +52,12 @@ export default function ModelViewer({ className }: ModelViewerProps) {
   
   // Corriger les chemins avec des espaces
   const models = [
-    '/3d/sac%201%20banner.glb',
-    '/3d/sac%202%20banner.glb',
-    '/3d/sac%203%20banner.glb',
-    '/3d/sac%20rouge.glb'
+    // '/3d/sac%201%20banner.glb',
+    // '/3d/sac%202%20banner.glb',
+    // '/3d/sac%203%20banner.glb',
+    '/3d/sac%20rouge.glb',
+    '/3d/sac%20orange.glb',
+    '/3d/sac%20mauve.glb'
   ]
 
   useEffect(() => {
@@ -116,10 +118,12 @@ export default function ModelViewer({ className }: ModelViewerProps) {
 
 // Preload all models avec chemins encodés
 const modelsToPreload = [
-  '/3d/sac%201%20banner.glb',
-  '/3d/sac%202%20banner.glb',
-  '/3d/sac%203%20banner.glb',
-  '/3d/sac%20rouge.glb'
+  // '/3d/sac%201%20banner.glb',
+  // '/3d/sac%202%20banner.glb',
+  // '/3d/sac%203%20banner.glb',
+  '/3d/sac%20rouge.glb',
+  '/3d/sac%20orange.glb',
+  '/3d/sac%20mauve.glb'
 ]
 
 // Preload avec gestion d'erreur

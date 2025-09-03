@@ -27,7 +27,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="w-full bg-[var(--navbar-background)] px-4 py-1 md:px-8 lg:px-12 shadow-md">
+        <nav className="w-full bg-[var(--navbar-background)] px-4 py-1 md:px-8 lg:px-12 shadow-md sticky top-0 z-50">
             <div className="flex items-center justify-between max-w-7xl mx-auto">
                 {/* Logo */}
                 <div className="flex-shrink-0 flex items-center space-x-2">
@@ -109,7 +109,7 @@ export default function Navbar() {
 
                         {/* Mobile Social Icons */}
                         <div className="flex items-center space-x-6 px-4 pt-4 border-t border-gray-200">
-                            <a href="#"
+                            <a href="https://www.instagram.com/la_fabriq_artisanale?utm_source=ig_web_button_share_sheet&igsh=MWQwenJzcTlvMDlpag==" target="_blank" rel="noopener noreferrer"
                                 title="Instagram"
                                 aria-label="Suivez-nous sur Instagram"
                                 className="text-[var(--text-primary)] hover:text-[var(--text-secondary)] transition-colors duration-200">

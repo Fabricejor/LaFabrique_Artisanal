@@ -44,7 +44,8 @@ export default function Hero() {
             
             {/* Slogan */}
             <p className="text-xl lg:text-2xl text-[var(--text-secondary)] font-montserrat mb-8 leading-relaxed">
-              Découvrez l'art africain réinventé à travers nos créations uniques
+              Découvrez l'art africain réinventé à travers nos créations uniques,
+              Portez l'Afrique avec fierté et style.
             </p>
             
             {/* Bouton */}

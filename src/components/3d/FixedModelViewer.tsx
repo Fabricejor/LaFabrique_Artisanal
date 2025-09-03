@@ -119,10 +119,12 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
   
   // Utiliser les noms exacts des fichiers
   const models = [
-    '/3d/sac 1 banner.glb',
-    '/3d/sac 2 banner.glb',
-    '/3d/sac 3 banner.glb',
-    '/3d/sac rouge.glb'
+    // '/3d/sac 1 banner.glb',
+    // '/3d/sac 2 banner.glb',
+    // '/3d/sac 3 banner.glb',
+    '/3d/sac rouge.glb',
+    '/3d/sac orange.glb',
+    '/3d/sac mauve.glb'
   ]
 
   useEffect(() => {
@@ -199,7 +201,7 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
            {/* Intensité forte pour créer les reflets principaux sur les matériaux */}
            <directionalLight 
              position={[10, 10, 10]} 
-             intensity={2.5} 
+             intensity={5.5} 
              color="#ffffff"
              castShadow 
            />
@@ -208,7 +210,7 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
            {/* Vient du côté opposé avec une intensité plus douce */}
            <directionalLight 
              position={[-8, 5, -8]} 
-             intensity={1.0} 
+             intensity={3.0} 
              color="#f0f0f0" 
            />
            
@@ -234,7 +236,7 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
            {/* Lumière chaude à droite */}
            <pointLight 
              position={[8, 0, 3]} 
-             intensity={1.0} 
+             intensity={3.0} 
              color="#fff8e1"
              distance={15}
              decay={1}
@@ -243,7 +245,7 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
            {/* Lumière froide à gauche pour le contraste */}
            <pointLight 
              position={[-8, 0, 3]} 
-             intensity={0.8} 
+             intensity={1.8} 
              color="#e3f2fd"
              distance={15}
              decay={1}
@@ -289,19 +291,21 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
       )}
       
       {/* Indicateur du modèle actuel */}
-      <div className="absolute top-2 left-2 text-xs text-gray-600 bg-white bg-opacity-70 px-2 py-1 rounded">
+      {/* <div className="absolute top-2 left-2 text-xs text-gray-600 bg-white bg-opacity-70 px-2 py-1 rounded">
         Model {currentModelIndex + 1}/3
-      </div>
+      </div> */}
     </div>
   )
 }
 
 // Preload tous les modèles
 const modelsToPreload = [
-  '/3d/sac 1 banner.glb',
-  '/3d/sac 2 banner.glb',
-  '/3d/sac 3 banner.glb',
-  '/3d/sac rouge.glb'
+  // '/3d/sac 1 banner.glb',
+  // '/3d/sac 2 banner.glb',
+  // '/3d/sac 3 banner.glb',
+  '/3d/sac rouge.glb',
+  '/3d/sac orange.glb',
+  '/3d/sac mauve.glb'
 ]
 
 modelsToPreload.forEach((model, index) => {
