@@ -87,7 +87,7 @@ export default function OurNetwork() {
         </div>
 
         {/* Grille des publications Instagram */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-12">
           {instagram_posts.map((post, index) => (
             <div key={index} className="flex justify-center">
               <div className="w-full max-w-sm">
