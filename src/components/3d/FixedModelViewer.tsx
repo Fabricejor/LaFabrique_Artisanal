@@ -9,93 +9,78 @@ interface ModelProps {
 }
 
 function Model({ modelPath }: ModelProps) {
-  const [error, setError] = useState<string | null>(null)
+  const gltf = useGLTF(modelPath)
   
-  try {
-    const gltf = useGLTF(modelPath)
-    
-    useEffect(() => {
-      if (gltf.scene) {
-        // Cloner la scène pour éviter les conflits entre plusieurs instances
-        const scene = gltf.scene.clone()
-        
-        // ===== OPTIMISATION DES MATÉRIAUX POUR L'ÉCLAIRAGE =====
-        
-        // Parcourir tous les objets de la scène pour optimiser leurs matériaux
-        scene.traverse((child: any) => {
-          if (child.isMesh && child.material) {
-            // Si c'est un matériau standard, s'assurer qu'il réagit bien à la lumière
-            if (child.material.isMeshStandardMaterial || child.material.isMeshPhysicalMaterial) {
-              // Augmenter la rugosité pour des reflets plus diffus et naturels
-              child.material.roughness = Math.min(child.material.roughness + 0.2, 1.0)
-              
-              // Réduire le facteur métallique pour que la lumière se diffuse mieux
-              child.material.metalness = Math.max(child.material.metalness - 0.1, 0.0)
-              
-              // S'assurer que le matériau reçoit les ombres
-              child.receiveShadow = true
-              child.castShadow = true
-              
-              // Forcer la mise à jour du matériau
-              child.material.needsUpdate = true
-            }
+  useEffect(() => {
+    if (gltf.scene) {
+      // Cloner la scène pour éviter les conflits entre plusieurs instances
+      const scene = gltf.scene.clone()
+      
+      // ===== OPTIMISATION DES MATÉRIAUX POUR L'ÉCLAIRAGE =====
+      
+      // Parcourir tous les objets de la scène pour optimiser leurs matériaux
+      scene.traverse((child: any) => {
+        if (child.isMesh && child.material) {
+          // Si c'est un matériau standard, s'assurer qu'il réagit bien à la lumière
+          if (child.material.isMeshStandardMaterial || child.material.isMeshPhysicalMaterial) {
+            // Augmenter la rugosité pour des reflets plus diffus et naturels
+            child.material.roughness = Math.min(child.material.roughness + 0.2, 1.0)
             
-            // Si c'est un matériau de base (non éclairé), le convertir en matériau standard
-            if (child.material.isMeshBasicMaterial) {
-              const oldMaterial = child.material
-              child.material = new THREE.MeshStandardMaterial({
-                color: oldMaterial.color,
-                map: oldMaterial.map,
-                transparent: oldMaterial.transparent,
-                opacity: oldMaterial.opacity,
-                roughness: 0.7,  // Rugosité modérée pour un rendu naturel
-                metalness: 0.1   // Peu métallique pour plus de diffusion
-              })
-              child.receiveShadow = true
-              child.castShadow = true
-            }
+            // Réduire le facteur métallique pour que la lumière se diffuse mieux
+            child.material.metalness = Math.max(child.material.metalness - 0.1, 0.0)
+            
+            // S'assurer que le matériau reçoit les ombres
+            child.receiveShadow = true
+            child.castShadow = true
+            
+            // Forcer la mise à jour du matériau
+            child.material.needsUpdate = true
           }
-        })
-        
-        // ===== AJUSTEMENT DE LA TAILLE ET POSITION =====
-        
-        // Calculer la bounding box pour ajuster la taille automatiquement
-        const box = new THREE.Box3().setFromObject(scene)
-        const size = box.getSize(new THREE.Vector3())
-        const maxDim = Math.max(size.x, size.y, size.z)
-        
-        // Échelle adaptative : plus grande pour les petits objets, plus petite pour les gros
-        const targetSize = 2.5  // Taille cible dans l'espace 3D
-        const scale = targetSize / maxDim
-        
-        scene.scale.setScalar(scale)
-        scene.position.set(0, 0, 0)
-        
-        // ===== LOGGING POUR DEBUG =====
-        console.log('Model loaded successfully:', modelPath)
-        console.log('Model size:', size)
-        console.log('Applied scale:', scale)
-        console.log('Materials optimized for lighting')
-        
-        setError(null)
-      }
-    }, [gltf.scene, modelPath])
+          
+          // Si c'est un matériau de base (non éclairé), le convertir en matériau standard
+          if (child.material.isMeshBasicMaterial) {
+            const oldMaterial = child.material
+            child.material = new THREE.MeshStandardMaterial({
+              color: oldMaterial.color,
+              map: oldMaterial.map,
+              transparent: oldMaterial.transparent,
+              opacity: oldMaterial.opacity,
+              roughness: 0.7,
+              metalness: 0.1
+            })
+            child.receiveShadow = true
+            child.castShadow = true
+          }
+        }
+      })
+      
+      // ===== AJUSTEMENT DE LA TAILLE ET POSITION =====
+      
+      // Calculer la bounding box pour ajuster la taille automatiquement
+      const box = new THREE.Box3().setFromObject(scene)
+      const size = box.getSize(new THREE.Vector3())
+      const maxDim = Math.max(size.x, size.y, size.z)
+      
+      // Échelle adaptative : plus grande pour les petits objets, plus petite pour les gros
+      const targetSize = 2.5
+      const scale = targetSize / maxDim
+      
+      scene.scale.setScalar(scale)
+      scene.position.set(0, 0, 0)
+      
+      // ===== LOGGING POUR DEBUG =====
+      console.log('Model loaded successfully:', modelPath)
+      console.log('Model size:', size)
+      console.log('Applied scale:', scale)
+      console.log('Materials optimized for lighting')
+    }
+  }, [gltf.scene, modelPath])
 
-    return (
-      <Center>
-        <primitive object={gltf.scene.clone()} />
-      </Center>
-    )
-  } catch (err) {
-    console.error('Error loading model:', modelPath, err)
-    setError(err instanceof Error ? err.message : 'Unknown error')
-    return (
-      <mesh>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="red" />
-      </mesh>
-    )
-  }
+  return (
+    <Center>
+      <primitive object={gltf.scene.clone()} />
+    </Center>
+  )
 }
 
 // Composant de fallback pour le chargement
@@ -117,11 +102,14 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
   
-  // Utiliser les noms exacts des fichiers avec encodage URL correct
+  // Helper pour construire l'URL des modèles depuis /public/3d
+  const makeModelUrl = (filename: string) => `/3d/${encodeURIComponent(filename)}`
+  
+  // Utiliser les noms exacts des fichiers, encodés de manière fiable
   const models = [
-    '/3d/sac%20rouge.glb',
-    '/3d/sac%20orange.glb',
-    '/3d/sac%20mauve.glb'
+    makeModelUrl('sac rouge.glb'),
+    makeModelUrl('sac orange.glb'),
+    makeModelUrl('sac mauve.glb')
   ]
 
   useEffect(() => {
@@ -297,12 +285,9 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
 
 // Preload tous les modèles
 const modelsToPreload = [
-  // '/3d/sac 1 banner.glb',
-  // '/3d/sac 2 banner.glb',
-  // '/3d/sac 3 banner.glb',
-  '/3d/sac rouge.glb',
-  '/3d/sac orange.glb',
-  '/3d/sac mauve.glb'
+  '/3d/sac%20rouge.glb',
+  '/3d/sac%20orange.glb',
+  '/3d/sac%20mauve.glb'
 ]
 
 modelsToPreload.forEach((model, index) => {

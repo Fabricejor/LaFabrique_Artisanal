@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
-import { video_tiktok } from '@/constants/contants';
+import { video_tiktok, instagram_posts } from '@/constants/contants';
 
 // Composant pour afficher une vidéo TikTok embed
 interface TikTokVideoProps {
@@ -30,6 +30,37 @@ function TikTokVideo({ embed, index }: TikTokVideoProps) {
   );
 }
 
+// Composant pour afficher une publication Instagram embed
+interface InstagramPostProps {
+  embed: string;
+  index: number;
+}
+
+function InstagramPost({ embed, index }: InstagramPostProps) {
+  useEffect(() => {
+    // Charger le script Instagram si ce n'est pas déjà fait
+    const hasHttps = document.querySelector('script[src="https://www.instagram.com/embed.js"]');
+    const hasProtocolRelative = document.querySelector('script[src="//www.instagram.com/embed.js"]');
+    if (!hasHttps && !hasProtocolRelative) {
+      const script = document.createElement('script');
+      script.src = 'https://www.instagram.com/embed.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  return (
+    <div className="instagram-post-container">
+      <div
+        dangerouslySetInnerHTML={{
+          // Retire les <script> pour éviter les doublons; laisse Instagram gérer le rendu de la vidéo
+          __html: embed.replace(/<script[^>]*>.*?<\/script>/gi, ''),
+        }}
+      />
+    </div>
+  );
+}
+
 export default function OurNetwork() {
   return (
     <section className="bg-[var(--background-secondary)] py-16 sm:py-24">
@@ -50,6 +81,17 @@ export default function OurNetwork() {
             <div key={index} className="flex justify-center">
               <div className="w-full max-w-sm">
                 <TikTokVideo embed={video.embed} index={index} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Grille des publications Instagram */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mt-12">
+          {instagram_posts.map((post, index) => (
+            <div key={index} className="flex justify-center">
+              <div className="w-full max-w-sm">
+                <InstagramPost embed={post.embed} index={index} />
               </div>
             </div>
           ))}
@@ -118,6 +160,24 @@ export default function OurNetwork() {
             max-width: 350px !important;
             min-width: 280px !important;
           }
+        }
+
+        /* Styles pour les publications Instagram (même style de cartes) */
+        .instagram-post-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .instagram-media {
+          margin: 0 auto !important;
+          border-radius: 16px !important;
+          overflow: hidden !important;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+          transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+        }
+        .instagram-media:hover {
+          transform: translateY(-5px) !important;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
         }
       `}</style>
     </section>

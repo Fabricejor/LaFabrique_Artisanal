@@ -8,28 +8,23 @@ interface ModelProps {
 }
 
 function Model({ modelPath }: ModelProps) {
-  try {
-    const { scene } = useGLTF(modelPath)
-    
-    useEffect(() => {
-      if (scene) {
-        // Centrer le modèle
-        scene.position.set(0, 0, 0)
-        // Échelle plus conservative
-        scene.scale.setScalar(1.5)
-        console.log('Model loaded:', modelPath)
-      }
-    }, [scene, modelPath])
+  const { scene } = useGLTF(modelPath)
+  
+  useEffect(() => {
+    if (scene) {
+      // Centrer le modèle
+      scene.position.set(0, 0, 0)
+      // Échelle plus conservative
+      scene.scale.setScalar(1.5)
+      console.log('Model loaded:', modelPath)
+    }
+  }, [scene, modelPath])
 
-    return (
-      <Center>
-        <primitive object={scene} />
-      </Center>
-    )
-  } catch (error) {
-    console.error('Error loading model:', modelPath, error)
-    return null
-  }
+  return (
+    <Center>
+      <primitive object={scene} />
+    </Center>
+  )
 }
 
 // Composant de fallback pour le chargement
@@ -50,14 +45,13 @@ export default function ModelViewer({ className }: ModelViewerProps) {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   
-  // Corriger les chemins avec des espaces
+  // Helper pour construire l'URL des modèles depuis /public/3d
+  const makeModelUrl = (filename: string) => `/3d/${encodeURIComponent(filename)}`
+  
   const models = [
-    // '/3d/sac%201%20banner.glb',
-    // '/3d/sac%202%20banner.glb',
-    // '/3d/sac%203%20banner.glb',
-    '/3d/sac%20rouge.glb',
-    '/3d/sac%20orange.glb',
-    '/3d/sac%20mauve.glb'
+    makeModelUrl('sac rouge.glb'),
+    makeModelUrl('sac orange.glb'),
+    makeModelUrl('sac mauve.glb')
   ]
 
   useEffect(() => {
@@ -118,9 +112,6 @@ export default function ModelViewer({ className }: ModelViewerProps) {
 
 // Preload all models avec chemins encodés
 const modelsToPreload = [
-  // '/3d/sac%201%20banner.glb',
-  // '/3d/sac%202%20banner.glb',
-  // '/3d/sac%203%20banner.glb',
   '/3d/sac%20rouge.glb',
   '/3d/sac%20orange.glb',
   '/3d/sac%20mauve.glb'
