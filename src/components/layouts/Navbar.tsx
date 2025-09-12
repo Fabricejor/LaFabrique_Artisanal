@@ -16,8 +16,7 @@ export default function Navbar() {
 
     const menuItems = [
         { label: 'Accueil', href: '/' },
-        { label: 'Sacs', href: '/sacs' },
-        { label: 'Bijoux', href: '/bijoux' },
+        { label: 'Catalogue', href: '/catalogue' },
         { label: 'A propos', href: '/a-propos' },
         { label: 'Contact', href: '/contact' }
     ];
@@ -27,27 +26,27 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="w-full bg-[var(--navbar-background)] px-4 py-1 md:px-8 lg:px-12 shadow-md sticky top-0 z-50">
+        <nav className="w-full bg-[var(--navbar-background)] px-4 py-1 shadow-md sticky top-0 z-50 md:px-8 lg:px-12">
             <div className="flex items-center justify-between max-w-7xl mx-auto">
                 {/* Logo */}
                 <div className="flex-shrink-0 flex items-center space-x-2">
                     <Link href="/">
-                        <Image src="/image/LOGOpage.png" alt="Logo" width={75} height={75} />
+                        <Image src="/image/LOGOpage.png" alt="Logo" width={75} height={75} className="w-16 h-16 md:w-[75px] md:h-[75px] lg:w-[60px] lg:h-[60px]" />
                     </Link>
-                    <h1 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] font-playfair">
+                    <h1 className="text-xl md:text-2xl lg:text-xl xl:text-3xl font-bold text-[var(--text-primary)] font-playfair">
                         La Fabrique Artisanal
                     </h1>
                 </div>
 
                 {/* Desktop Navigation Menu */}
-                <div className="hidden md:flex items-center space-x-8 lg:space-x-12">
+                <div className="hidden left-1/2 lg:flex items-center space-x-8 lg:space-x-4 xl:space-x-12">
                     {menuItems.map((item) => {
                         const isActive = pathname === item.href;
                         return (
                             <Link
                                 key={item.label}
                                 href={item.href}
-                                className={`nav-link text-lg transition-colors duration-200 font-montserrat ${
+                                className={`nav-link text-lg lg:text-base xl:text-lg transition-colors duration-200 font-montserrat ${
                                     isActive 
                                         ? 'text-[var(--text-primary)] font-medium active' 
                                         : 'text-[var(--text-secondary)] hover:text-[var(--text-secondary)]'
@@ -60,7 +59,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Social Icons */}
-                <div className="hidden md:flex items-center space-x-4">
+                <div className="hidden lg:flex items-center space-x-4">
                     <a href="#"
                         title="Instagram"
                         aria-label="Suivez-nous sur Instagram"
@@ -78,7 +77,7 @@ export default function Navbar() {
                 {/* Mobile Menu Button */}
                 <button
                     onClick={toggleMenu}
-                    className="md:hidden text-[var(--text-primary)] p-2"
+                    className="lg:hidden text-[var(--text-primary)] p-2"
                     aria-label="Toggle menu"
                 >
                     {isMenuOpen ? <IoClose size={28} /> : <RxHamburgerMenu size={28} />}
@@ -87,7 +86,7 @@ export default function Navbar() {
 
             {/* Mobile Navigation Menu */}
             {isMenuOpen && (
-                <div className="md:hidden mt-4 bg-[var(--navbar-background)] border-t border-gray-200">
+                <div className="lg:hidden mt-4 bg-[var(--navbar-background)] border-t border-gray-200">
                     <div className="flex flex-col space-y-4 py-4">
                         {menuItems.map((item) => {
                             const isActive = pathname === item.href;

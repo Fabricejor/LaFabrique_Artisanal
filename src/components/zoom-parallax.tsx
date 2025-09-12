@@ -68,15 +68,15 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 							// '[&>div]:!h-[30vh]' : définit la hauteur du conteneur enfant à 30vh
 							// '[&>div]:!w-[35vw]' : définit la largeur du conteneur enfant à 35vw
 							className={`absolute top-0 flex h-full w-full items-center justify-center 
-								${index === 1 ? '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[25vw]' : ''} 
-								${index === 2 ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} 
-								${index === 3 ? '[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]' : ''} 
-								${index === 4 ? '[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]' : ''} 
-								${index === 5 ? '[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]' : ''} 
-								${index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} `}
+								${index === 1 ? '[&>div]:!-top-[40vh] [&>div]:!left-[20vw] [&>div]:!h-[35vh] [&>div]:!w-[20vw]' : ''} 
+								${index === 2 ? '[&>div]:!-top-[25vh] [&>div]:!-left-[23vw] [&>div]:!h-[55vh] [&>div]:!w-[20vw]' : ''} 
+								${index === 3 ? '[&>div]:!-top-[5vh] [&>div]:!left-[35vw] [&>div]:!h-[45vh] [&>div]:!w-[15vw]' : ''} 
+								${index === 4 ? '[&>div]:!top-[27.5vh] [&>div]:!-left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]' : ''} 
+								${index === 5 ? '[&>div]:!top-[20.5vh] [&>div]:!-left-[32.5vw] [&>div]:!h-[50vh] [&>div]:!w-[25vw]' : ''} 
+								${index === 6 ? '[&>div]:!top-[27.5vh] [&>div]:!left-[21.5vw] [&>div]:!h-[25vh] [&>div]:!w-[15vw]' : ''} `}
 						>
 							{/* Conteneur intérieur pour l'image. L'image à l'index 0 (centrale) garde ces dimensions par défaut */}
-							<div className="relative h-[50vh] w-[25vw]">
+							<div className="relative h-[50vh] w-[25vw] ">
 								<img
 									src={src || '/placeholder.svg'} // Affiche une image de remplacement si src est manquant
 									alt={alt || `Parallax image ${index + 1}`} // Texte alternatif par défaut

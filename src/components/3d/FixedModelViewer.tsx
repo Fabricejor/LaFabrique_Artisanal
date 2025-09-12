@@ -1,7 +1,7 @@
 'use client'
+import React, { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { useGLTF, OrbitControls, Center } from '@react-three/drei'
-import { Suspense, useEffect, useState } from 'react'
 import * as THREE from 'three'
 
 interface ModelProps {
@@ -117,14 +117,11 @@ export default function FixedModelViewer({ className }: FixedModelViewerProps) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
   
-  // Utiliser les noms exacts des fichiers
+  // Utiliser les noms exacts des fichiers avec encodage URL correct
   const models = [
-    // '/3d/sac 1 banner.glb',
-    // '/3d/sac 2 banner.glb',
-    // '/3d/sac 3 banner.glb',
-    '/3d/sac rouge.glb',
-    '/3d/sac orange.glb',
-    '/3d/sac mauve.glb'
+    '/3d/sac%20rouge.glb',
+    '/3d/sac%20orange.glb',
+    '/3d/sac%20mauve.glb'
   ]
 
   useEffect(() => {

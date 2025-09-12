@@ -1,7 +1,7 @@
 'use client';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence, Transition, Variants } from 'framer-motion';
-import { useState, useEffect, Children } from 'react';
+import { useState, useEffect, Children, useCallback } from 'react';
 
 type TextLoopProps = {
   children: React.ReactNode[];
@@ -23,18 +23,22 @@ export function TextLoop({
   const [currentIndex, setCurrentIndex] = useState(0);
   const items = Children.toArray(children);
 
+  const stableOnIndexChange = useCallback(onIndexChange || (() => {}), [onIndexChange]);
+
   useEffect(() => {
     const intervalMs = interval * 1000;
 
     const timer = setInterval(() => {
       setCurrentIndex((current) => {
         const next = (current + 1) % items.length;
-        onIndexChange?.(next);
+        if (onIndexChange) {
+          onIndexChange(next);
+        }
         return next;
       });
     }, intervalMs);
     return () => clearInterval(timer);
-  }, [items.length, interval, onIndexChange]);
+  }, [items.length, interval]); // Removed onIndexChange from dependencies
 
   const motionVariants: Variants = {
     initial: { y: 20, opacity: 0 },

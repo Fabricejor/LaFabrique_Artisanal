@@ -1,7 +1,7 @@
 'use client'
+import React, { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { useGLTF, OrbitControls, Center } from '@react-three/drei'
-import { Suspense, useEffect, useState } from 'react'
 
 interface ModelProps {
   modelPath: string;
